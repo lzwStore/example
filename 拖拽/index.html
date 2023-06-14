@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>拖拽</title>
+  <link rel="stylesheet" href="./index.css">
+</head>
+<body>
+  <header class="flex justify_center">拖拽</header>
+  <div class="container">
+    <ul class="flex select" data-drop="move">
+      <li data-effect="copy" draggable="true" class="b_green">前端</li>
+      <li data-effect="copy" draggable="true" class="b_pink">Java</li>
+      <li data-effect="copy" draggable="true" class="b_blue">php</li>
+      <li data-effect="copy" draggable="true" class="b_yellow">python</li>
+      <li data-effect="copy" draggable="true" class="b_red">c++</li>
+    </ul>
+    <div data-drop="copy" class="box">
+      
+    </div>
+  </div>
+  <script>
+    const container = document.querySelector('.container')
+    let source;
+    // 拖拽开始事件
+    container.ondragstart = (e) => {
+      source = e.target;
+      // 通过自定义属性改变鼠标样式
+      e.dataTransfer.effectAllowed = e.target.dataset.effect
+      console.log('开始拖拽', e);
+    }
+    container.ondragover = (e) => {
+      e.preventDefault(); // 组织默认行为, 解决tr/td等标签不允许触发drop事件
+      // console.log('拖拽了 over', e.target);
+    }
+    container.ondragenter = (e) => {
+      clearDropStyle();
+      // console.log('拖拽进入了 enter', e.target);
+      const dropNode = getDropNode(e.target);
+      // 判断只有能拖入的 dom 才加入样式
+      if (dropNode && dropNode.dataset.drop === e.dataTransfer.effectAllowed) {
+        e.target.classList.add('drop_over')
+      }
+    }
+    container.ondrop = (e) => {
+      clearDropStyle()
+      const dropNode = getDropNode(e.target);
+      // 判断只有能拖入的 dom 才加入样式
+      if (dropNode && dropNode.dataset.drop === e.dataTransfer.effectAllowed) {
+        if (dropNode.dataset.drop === 'copy') {
+          const nodes = Array.from(dropNode.childNodes).filter((_, i) => i !== 0);
+          const flag = nodes.length > 0 && nodes.some(e => e?.innerText === source.innerText)
+          if (flag) return;
+          const cloneNode = source.cloneNode(true);
+          dropNode.appendChild(cloneNode)
+        }
+      }
+    }
+
+    function clearDropStyle() {
+      document.querySelectorAll('.drop_over').forEach(node => {
+        node.classList.remove('drop_over')
+      });
+    }
+
+    function getDropNode(node) {
+      console.log('node', node);
+      while(node) {
+        if (node.dataset?.drop) {
+          return node
+        }
+        node = node.parentNode
+      }
+    }
+
+    function readFilePromise(path){
+      return new Promise((resolve, reject) => {
+        fs.readFile(path, (err, data) => {
+          if (err) {
+            reject(err)
+          } else {
+            resolve(data.toString('utf8'))
+          }
+        })
+      })
+    }
+  </script>
+</body>
+</html>
