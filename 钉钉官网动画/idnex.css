@@ -1,0 +1,47 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+html,
+body {
+  height: 100%;
+  width: 100%;
+  position: relative;
+}
+.body_container {
+  height: 100%;
+  width: 100%;
+  overflow-y: scroll;
+}
+.body_container header {
+  height: 100%;
+  width: 100%;
+  background-color: #99a28f;
+  font-size: 40px;
+  color: #fff;
+}
+.body_container .text {
+  height: 300px;
+}
+.body_container .playground {
+  height: 2000px;
+  position: relative;
+}
+.body_container .playground .animation_container {
+  position: static;
+  height: 400px;
+  width: 100%;
+  background-color: #ccc;
+}
+.body_container .playground .animation_container .list .list_item {
+  display: inline-block;
+}
+.body_container footer {
+  height: 200px;
+  background-color: #ccc;
+}
+.flex_center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

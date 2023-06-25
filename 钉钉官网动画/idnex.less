@@ -1,0 +1,49 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+html, body {
+  height: 100%;
+  width: 100%;
+  position: relative;
+}
+.body_container {
+  height: 100%;
+  width: 100%;
+  overflow-y: scroll;
+  header {
+    height: 100%;
+    width: 100%;
+    background-color: rgb(153, 162, 143);
+    font-size: 40px;
+    color: #fff;
+  }
+  .text {
+    height: 300px;
+  }
+  .playground {
+    height: 2000px;
+    position: relative;
+    .animation_container {
+      position: static;
+      height: 400px;
+      width: 100%;
+      background-color: #ccc;
+      .list {
+        .list_item {
+          display: inline-block;
+        }
+      }
+    }
+  }
+  footer {
+    height: 200px;
+    background-color: #ccc;
+  }
+}
+
+.flex_center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
